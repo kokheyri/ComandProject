@@ -18,6 +18,13 @@ Class ComandProjectInst.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFiel
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    System.Drawing.Bitmap bmp : Public
+    System.Drawing.Graphics gp : Public
+    System.Drawing.Pen pen : Public
+    piy Piy : Public
+Class ComandProjectInst.MyForm+piy: AutoLayout, AnsiClass, Class, NestedPublic, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
     Int32 x1 : Public
     Int32 y1 : Public
     Int32 x2 : Public
@@ -26,6 +33,8 @@ Class ComandProjectInst.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFiel
     Int32 Kol_shtrihov : Public
     Int32 shtrih : Public
     Int32 kol_p : Public
-    System.Drawing.Bitmap bmp : Public
-    System.Drawing.Graphics gp : Public
-    System.Drawing.Pen pen : Public
+  Methods:
+    a(Int32, Graphics, Pen): PrivateScope, Public, HideBySig
+    b(Int32, Graphics, Pen): PrivateScope, Public, HideBySig
+    c(Int32, Graphics, Pen): PrivateScope, Public, HideBySig
+    d(Int32, Graphics, Pen): PrivateScope, Public, HideBySig

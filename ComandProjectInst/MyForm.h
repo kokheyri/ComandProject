@@ -19,14 +19,100 @@ namespace ComandProjectInst {
 	{
 	public:
 
-		int x1;
-		int y1;
-		int x2;
-		int y2;
-		int u;
-		int Kol_shtrihov;
-		int shtrih;
-		int kol_p;
+		Bitmap^bmp = gcnew Bitmap(1000, 1000);
+		Graphics^gp = Graphics::FromImage(bmp);
+		Pen^pen = gcnew Pen(Brushes::White);
+		ref class piy
+		{
+		public:
+			int x1;
+			int y1;
+			int x2;
+			int y2;
+			int u;
+			int Kol_shtrihov;
+			int shtrih;
+			int kol_p;
+			void a(int i, Graphics^gp, Pen^pen)
+			{
+				if (i > 0)
+				{
+					d(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2 = x2 + u, y2);
+					x1 = x2;
+					y1 = y2;
+					a(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2, y2 = y2 + u);
+					x1 = x2;
+					y1 = y2;
+					a(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2 = x2 - u, y2);
+					x1 = x2;
+					y1 = y2;
+					c(i - 1, gp, pen);
+				}
+			}
+			void b(int i, Graphics^gp, Pen^pen)
+			{
+				if (i > 0)
+				{
+					c(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2 = x2 - u, y2);
+					x1 = x2;
+					y1 = y2;
+					b(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2, y2 = y2 - u);
+					x1 = x2;
+					y1 = y2;
+					b(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2 = x2 + u, y2);
+					x1 = x2;
+					y1 = y2;
+					d(i - 1, gp, pen);
+				}
+			}
+			void c(int i, Graphics^gp, Pen^pen)
+			{
+				if (i > 0)
+				{
+					b(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2, y2 = y2 - u);
+					x1 = x2;
+					y1 = y2;
+					c(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2 = x2 - u, y2);
+					x1 = x2;
+					y1 = y2;
+					c(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2, y2 = y2 + u);
+					x1 = x2;
+					y1 = y2;
+					a(i - 1, gp, pen);
+				}
+			}
+			void d(int i, Graphics ^gp, Pen^pen)
+			{
+				if (i > 0)
+				{
+					a(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2, y2 = y2 + u);
+					x1 = x2;
+					y1 = y2;
+					d(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2 = x2 + u, y2);
+					x1 = x2;
+					y1 = y2;
+					d(i - 1, gp, pen);
+					gp->DrawLine(pen, x1, y1, x2, y2 = y2 - u);
+					x1 = x2;
+					y1 = y2;
+					b(i - 1, gp, pen);
+				}
+			}
+		private:
+
+		};
+		piy^Piy = gcnew piy;
 		MyForm(void)
 		{
 			InitializeComponent();
@@ -34,9 +120,7 @@ namespace ComandProjectInst {
 			//TODO: добавьте код конструктора
 			//
 		}
-		Bitmap^bmp = gcnew Bitmap(1000, 1000);
-		Graphics^gp = Graphics::FromImage(bmp);
-		Pen^pen = gcnew Pen(Brushes::White);
+
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
@@ -97,94 +181,19 @@ namespace ComandProjectInst {
 		}
 #pragma endregion
 		//существует 4 вида позиции стандартной формы "П"
-		void a(int i)
-		{
-			if (i > 0)
-			{
-				d(i - 1);
-				gp->DrawLine(pen, x1, y1, x2 = x2 + u, y2);
-				x1 = x2;
-				y1 = y2;
-				a(i - 1);
-				gp->DrawLine(pen, x1, y1, x2, y2 = y2 + u);
-				x1 = x2;
-				y1 = y2;
-				a(i - 1);
-				gp->DrawLine(pen, x1, y1, x2= x2 - u, y2);
-				x1 = x2;
-				y1 = y2;
-				c(i - 1);
-			}
-		}
-		void b(int i)
-		{
-			if (i > 0)
-			{
-				c(i - 1);
-				gp->DrawLine(pen, x1, y1, x2 = x2 - u, y2);
-				x1 = x2;
-				y1 = y2;
-				b(i - 1);
-				gp->DrawLine(pen, x1, y1, x2, y2 = y2 - u);
-				x1 = x2;
-				y1 = y2;
-				b(i - 1);
-				gp->DrawLine(pen, x1, y1, x2 = x2 + u, y2);
-				x1 = x2;
-				y1 = y2;
-				d(i - 1);
-			}
-		}
-		void c(int i)
-		{
-			if (i > 0)
-			{
-				b(i - 1);
-				gp->DrawLine(pen, x1, y1, x2, y2 = y2 - u);
-				x1 = x2;
-				y1 = y2;
-				c(i - 1);
-				gp->DrawLine(pen, x1, y1, x2 = x2 - u, y2);
-				x1 = x2;
-				y1 = y2;
-				c(i - 1);
-				gp->DrawLine(pen, x1, y1, x2, y2 = y2 + u);
-				x1 = x2;
-				y1 = y2;
-				a(i - 1);
-			}
-		}
-		void d(int i)
-		{
-			if (i > 0)
-			{
-				a(i - 1);
-				gp->DrawLine(pen, x1, y1, x2, y2 = y2 + u);
-				x1 = x2;
-				y1 = y2;
-				d(i - 1);
-				gp->DrawLine(pen, x1, y1, x2 = x2 + u, y2);
-				x1 = x2;
-				y1 = y2;
-				d(i - 1);
-				gp->DrawLine(pen, x1, y1, x2, y2 = y2 - u);
-				x1 = x2;
-				y1 = y2;
-				b(i - 1);
-			}
-		}
+
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		pictureBox1->Height = MyForm::Height - 40;
 		pictureBox1->Width = MyForm::Height - 40;
 		pictureBox1->Top = ClientSize.Height / 2 - pictureBox1->Height / 2;
 		pictureBox1->Left = ClientSize.Width / 2 - pictureBox1->Width / 2;
-		x1 = 4;
-		y1 = 4;
-		x2 = 4;
-		y2 = 4;
-		u = 4;
-		a(7);
+		Piy->x1 = 4;
+		Piy->y1 = 4;
+		Piy->x2 = 4;
+		Piy->y2 = 4;
+		Piy->u = 4;
+		Piy->a(7, gp, pen);
 		this->pictureBox1->Image = bmp;
 	}
 
@@ -193,7 +202,7 @@ namespace ComandProjectInst {
 		pictureBox1->Width = MyForm::Height - 40;
 		pictureBox1->Top = ClientSize.Height / 2 - pictureBox1->Height / 2;
 		pictureBox1->Left = ClientSize.Width / 2 - pictureBox1->Width / 2;
-		shtrih = 2; //минимальная длина штриха
+		Piy->shtrih = 2; //минимальная длина штриха
 		gp->Clear(Color::LightBlue);
 		int pr = pictureBox1->Height; // рабочая переменная хранящая размерность
 		int p = pictureBox1->Height;
@@ -202,14 +211,16 @@ namespace ComandProjectInst {
 			if ((pr & (pr - 1)) == 0) break;
 			pr = pr - 1;
 		}
-		int kol_p = (log10(double(pr))/log10(double(2)))*2;//pr- количество штрихов, kol_p-порядок
-		int k = rand() % kol_p;
-		x1 = 4;
-		y1 = 4;
-		x2 = 4;
-		y2 = 4;
-		u =p/ pow(2,double(k));
-		a(k);
+		int kol_p = (log10(double(pr))/log10(double(2)));//pr- количество штрихов, kol_p-порядок
+		int k = pow(2, double(kol_p)) - 1 / pow(2, double(kol_p));
+		Piy->x1 = 1;
+		Piy->y1 = 1;
+		Piy->x2 = 1;
+		Piy->y2 = 1;
+
+	//	Piy->u = (p - (pow(2, double(kol_p))) )/ kol_p;
+		Piy->u = 2;
+//		Piy->a(kol_p, gp, pen);
 		this->pictureBox1->Image = bmp;
 	}
 	
