@@ -13,7 +13,7 @@ namespace ComandProjectInst {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Сводка для MyForm
+	/// —водка дл¤ MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
@@ -21,7 +21,7 @@ namespace ComandProjectInst {
 
 		Bitmap^bmp = gcnew Bitmap(1000, 1000);
 		Graphics^gp = Graphics::FromImage(bmp);
-		Pen^pen = gcnew Pen(Brushes::White);
+		Pen^pen = gcnew Pen(Brushes::DarkRed);
 		ref class piy
 		{
 		public:
@@ -123,7 +123,7 @@ namespace ComandProjectInst {
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// ќсвободить все используемые ресурсы.
 		/// </summary>
 		~MyForm()
 		{
@@ -140,13 +140,13 @@ namespace ComandProjectInst {
 
 	private:
 		/// <summary>
-		/// Требуется переменная конструктора.
+		/// “ребуетс¤ переменна¤ конструктора.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Обязательный метод для поддержки конструктора - не изменяйте
+		/// ќб¤зательный метод дл¤ поддержки конструктора - не измен¤йте
 		/// содержимое данного метода при помощи редактора кода.
 		/// </summary>
 		void InitializeComponent(void)
@@ -159,9 +159,9 @@ namespace ComandProjectInst {
 			// 
 			this->pictureBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom));
 			this->pictureBox1->BackColor = System::Drawing::Color::LightBlue;
-			this->pictureBox1->Location = System::Drawing::Point(177, 0);
+			this->pictureBox1->Location = System::Drawing::Point(106, 0);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(400, 400);
+			this->pictureBox1->Size = System::Drawing::Size(256, 256);
 			this->pictureBox1->TabIndex = 1;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -169,7 +169,7 @@ namespace ComandProjectInst {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(754, 401);
+			this->ClientSize = System::Drawing::Size(488, 256);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
@@ -180,7 +180,7 @@ namespace ComandProjectInst {
 
 		}
 #pragma endregion
-		//существует 4 вида позиции стандартной формы "П"
+		//существует 4 вида позиции стандартной формы "ѕ"
 
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -188,12 +188,12 @@ namespace ComandProjectInst {
 		pictureBox1->Width = MyForm::Height - 40;
 		pictureBox1->Top = ClientSize.Height / 2 - pictureBox1->Height / 2;
 		pictureBox1->Left = ClientSize.Width / 2 - pictureBox1->Width / 2;
-		Piy->x1 = 4;
-		Piy->y1 = 4;
-		Piy->x2 = 4;
-		Piy->y2 = 4;
-		Piy->u = 4;
-		Piy->a(7, gp, pen);
+		Piy->x1 = 1;
+		Piy->y1 = 1;
+		Piy->x2 = 1;
+		Piy->y2 = 1;
+		Piy->u = 2;
+		Piy->a(8, gp, pen);
 		this->pictureBox1->Image = bmp;
 	}
 
@@ -202,28 +202,29 @@ namespace ComandProjectInst {
 		pictureBox1->Width = MyForm::Height - 40;
 		pictureBox1->Top = ClientSize.Height / 2 - pictureBox1->Height / 2;
 		pictureBox1->Left = ClientSize.Width / 2 - pictureBox1->Width / 2;
-		Piy->shtrih = 2; //минимальная длина штриха
+		Piy->shtrih = 2; //минимальна¤ длина штриха
 		gp->Clear(Color::LightBlue);
-		int pr = pictureBox1->Height; // рабочая переменная хранящая размерность
-		int p = pictureBox1->Height;
-		while(pr > 0)
+		int pr = pictureBox1->Height - 2; // рабоча¤ переменна¤ хран¤ща¤ размерность
+		int p = pictureBox1->Height - 2;
+		while (pr > 0)
 		{
 			if ((pr & (pr - 1)) == 0) break;
 			pr = pr - 1;
 		}
-		int kol_p = (log10(double(pr))/log10(double(2)));//pr- количество штрихов, kol_p-порядок
-		int k = pow(2, double(kol_p)) - 1 / pow(2, double(kol_p));
+		int kol_p = (log10(double(pr)) / log10(double(2)));// kol_p-пор¤док
+		int k = pow(2, double(kol_p)) - 1 / pow(2, double(kol_p));//k=2^n-1/2^n минимально зан¤та¤ площадь
 		Piy->x1 = 1;
 		Piy->y1 = 1;
 		Piy->x2 = 1;
 		Piy->y2 = 1;
-
-	//	Piy->u = (p - (pow(2, double(kol_p))) )/ kol_p;
-		Piy->u = 2;
-//		Piy->a(kol_p, gp, pen);
+		Piy->u = k / ((3 + kol_p - 1) * kol_p);
+		if (Piy->u <3) Piy->u = 2;
+		//if ((Piy->u = ((pow(2, double(kol_p)))) / kol_p)<3) Piy->u = 3;
+		//Piy->u = 2;
+		Piy->a(kol_p, gp, pen);
 		this->pictureBox1->Image = bmp;
 	}
-	
-	
+
+
 	};
 }
