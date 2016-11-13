@@ -34,6 +34,7 @@ Class ComandProjectInst.MyForm+piy: AutoLayout, AnsiClass, Class, NestedPublic, 
     Int32 shtrih : Public
     Int32 kol_p : Public
   Methods:
+    ThreadProc(): PrivateScope, Public, Static, HideBySig
     a(Int32, Graphics, Pen): PrivateScope, Public, HideBySig
     b(Int32, Graphics, Pen): PrivateScope, Public, HideBySig
     c(Int32, Graphics, Pen): PrivateScope, Public, HideBySig

@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 
+
 namespace ComandProjectInst {
 
 	using namespace System;
@@ -11,17 +12,19 @@ namespace ComandProjectInst {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace System::Threading;
 	/// <summary>
 	/// —водка дл¤ MyForm
 	/// </summary>
+	bool kl;
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
-	public:
-
+	public:		
 		Bitmap^bmp = gcnew Bitmap(1000, 1000);
 		Graphics^gp = Graphics::FromImage(bmp);
 		Pen^pen = gcnew Pen(Brushes::DarkRed);
+
+	public:
 		ref class piy
 		{
 		public:
@@ -33,6 +36,24 @@ namespace ComandProjectInst {
 			int Kol_shtrihov;
 			int shtrih;
 			int kol_p;
+			static void ThreadProc()
+			{
+				Form ^Form1 = gcnew Form;
+				Form1->Size = System::Drawing::Size(250, 150);
+				Form1->BackColor = Color::YellowGreen;
+				Label ^label = gcnew Label;
+				Form1->Controls->Add(label);
+				label->Location = System::Drawing::Point(0, 0);
+				label->Size = System::Drawing::Size(250, 150);
+				label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 28, FontStyle::Regular, GraphicsUnit::Point));
+				label->Text = System::Convert::ToString("Поток");
+				Form1->ShowDialog();
+				if (kl == false)
+				{
+					System::Windows::Forms::MessageBox::Show("Поток будет остановлен");
+					Thread::Sleep(0);
+				}
+			}
 			void a(int i, Graphics^gp, Pen^pen)
 			{
 				if (i > 0)
@@ -50,6 +71,7 @@ namespace ComandProjectInst {
 					x1 = x2;
 					y1 = y2;
 					c(i - 1, gp, pen);
+					
 				}
 			}
 			void b(int i, Graphics^gp, Pen^pen)
@@ -115,6 +137,7 @@ namespace ComandProjectInst {
 		piy^Piy = gcnew piy;
 		MyForm(void)
 		{
+
 			InitializeComponent();
 			//
 			//TODO: добавьте код конструктора
@@ -173,6 +196,7 @@ namespace ComandProjectInst {
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &MyForm::MyForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->Resize += gcnew System::EventHandler(this, &MyForm::MyForm_Resize);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -184,6 +208,7 @@ namespace ComandProjectInst {
 
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		kl = true;
 		pictureBox1->Height = MyForm::Height - 40;
 		pictureBox1->Width = MyForm::Height - 40;
 		pictureBox1->Top = ClientSize.Height / 2 - pictureBox1->Height / 2;
@@ -194,6 +219,8 @@ namespace ComandProjectInst {
 		Piy->y2 = 1;
 		Piy->u = 2;
 		Piy->a(8, gp, pen);
+		Thread^ oThread = gcnew Thread(gcnew ThreadStart(&piy::ThreadProc));
+		oThread->Start();
 		this->pictureBox1->Image = bmp;
 	}
 
@@ -219,12 +246,15 @@ namespace ComandProjectInst {
 		Piy->y2 = 1;
 		Piy->u = k / ((3 + kol_p - 1) * kol_p);
 		if (Piy->u <3) Piy->u = 2;
-		//if ((Piy->u = ((pow(2, double(kol_p)))) / kol_p)<3) Piy->u = 3;
-		//Piy->u = 2;
 		Piy->a(kol_p, gp, pen);
 		this->pictureBox1->Image = bmp;
 	}
 
 
-	};
+
+	private: System::Void MyForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+	
+		kl = false;
+	}
+};
 }
